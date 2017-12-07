@@ -34,7 +34,7 @@ class Attendance extends Component {
               opacity={1}
               defaultKeyboard={this.state.customMapping}
               isDraggable={false}
-              placeholder={'Full Name'} enabled
+              placeholder={'Full Name (Click ME)'} enabled
               inputClassName={'form-control'}
             />
           </div>
