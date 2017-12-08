@@ -43,7 +43,7 @@ class Attendance extends Component {
               <button type='button' className='btn btn-lg btn-pill btn-success'>
                 <span className='icon icon-pencil'></span>
               </button>
-              <button type='button' className='btn btn-lg btn-pill btn-danger'>
+              <button type='button' onClick={e => { this.setState({value: ''}) }} className='btn btn-lg btn-pill btn-danger'>
                 <span className='icon icon-erase'></span>
               </button>
             </div>
