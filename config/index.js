@@ -15,6 +15,13 @@ const config = {
   env : process.env.NODE_ENV || 'development',
 
   // ----------------------------------
+  // API Configuration
+  // ----------------------------------
+  api_host : process.env.API_HOST,
+  application_id : process.env.APPLICATION_ID,
+  rest_api_key : process.env.REST_API_KEY,
+
+  // ----------------------------------
   // Project Structure
   // ----------------------------------
   path_base  : path.resolve(__dirname, '..'),
@@ -26,7 +33,7 @@ const config = {
   // ----------------------------------
   // Server Configuration
   // ----------------------------------
-  server_host : localip, // use string 'localhost' to prevent exposure on local network
+  server_host : process.env.HOST || localip, // use string 'localhost' to prevent exposure on local network
   server_port : process.env.PORT || 3000,
 
   // ----------------------------------

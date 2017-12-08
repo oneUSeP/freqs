@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import KeyboardedInput from 'react-touch-screen-keyboard'
+import validateInput from 'utils/validators/attendance'
+import Alert from 'react-s-alert'
 
 class Attendance extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      value: '',
+      name: '',
+      isLoading: false,
+      errors: [],
       customMapping: [
         ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
         ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', '@'],
@@ -16,8 +20,53 @@ class Attendance extends Component {
     this.handleValueChange = this.handleValueChange.bind(this)
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.createAttendanceError) {
+      let status = nextProps.createAttendanceError.status
+      let message = nextProps.createAttendanceError.message
+      Alert.error(`<h4>Error ${status}</h4><ul>` + (message ? (`<li>${message}</li>`) : '') + '</ul>', {
+        position: 'bottom',
+        effect: 'scale',
+        html: true
+      })
+    }
+
+    if (nextProps.creatingAttendanceSuccess) {
+      let attendance = nextProps.attendance
+      // Alert.success(`${attendance.get('objectId')} Recorded!`, {
+      Alert.success('Recorded!', {
+        position: 'bottom'
+        // effect: 'scale'
+      })
+    }
+  }
+
   handleValueChange (val) {
-    this.setState({ value: val })
+    this.setState({ name: val })
+  }
+
+  isValid = () => {
+    const { errors, isValid } = validateInput(this.state)
+
+    if (!isValid) {
+      this.setState({ errors, isLoading: false })
+    }
+
+    return isValid
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault()
+    let data = this.state
+    if (this.isValid(data)) {
+      this.setState({ name: '',
+        isLoading: true,
+        errors: {} })
+
+      this.props.createAttendance(data)
+    } else {
+      // this.setState({verify: null})
+    }
   }
 
   render () {
@@ -29,7 +78,7 @@ class Attendance extends Component {
         <div className='flextable'>
           <div className='flextable-item flextable-primary'>
             <KeyboardedInput
-              value={this.state.value}
+              value={this.state.name}
               onChange={(value) => { this.handleValueChange(value) }}
               opacity={1}
               defaultKeyboard={this.state.customMapping}
@@ -40,10 +89,10 @@ class Attendance extends Component {
           </div>
           <div className='flextable-item'>
             <div className='btn-group'>
-              <button type='button' className='btn btn-lg btn-pill btn-success'>
+              <button type='button' className='btn btn-lg btn-pill btn-success' onClick={this.onSubmit}>
                 <span className='icon icon-pencil'></span>
               </button>
-              <button type='button' onClick={e => { this.setState({value: ''}) }} className='btn btn-lg btn-pill btn-danger'>
+              <button type='button' onClick={e => { this.setState({name: ''}) }} className='btn btn-lg btn-pill btn-danger'>
                 <span className='icon icon-erase'></span>
               </button>
             </div>

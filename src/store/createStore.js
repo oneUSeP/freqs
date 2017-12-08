@@ -2,17 +2,23 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import makeRootReducer from './reducers'
+import { apiMiddleware } from 'redux-api-middleware'
+import { persistStore, autoRehydrate } from 'redux-persist'
+import handleTransitions from 'redux-history-transitions'
 
 export default (initialState = {}, history) => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  const middleware = [thunk, routerMiddleware(history)]
+  const middleware = [thunk, apiMiddleware, routerMiddleware(history)]
 
   // ======================================================
   // Store Enhancers
   // ======================================================
-  const enhancers = []
+  const enhancers = [
+    handleTransitions(history)
+  ]
+
   if (__DEBUG__) {
     const devToolsExtension = window.devToolsExtension
     if (typeof devToolsExtension === 'function') {
@@ -27,6 +33,7 @@ export default (initialState = {}, history) => {
     makeRootReducer(),
     initialState,
     compose(
+      autoRehydrate(),
       applyMiddleware(...middleware),
       ...enhancers
     )
@@ -39,6 +46,8 @@ export default (initialState = {}, history) => {
       store.replaceReducer(reducers(store.asyncReducers))
     })
   }
+
+  persistStore(store, { whitelist: ['auth', 'documents'] })
 
   return store
 }
