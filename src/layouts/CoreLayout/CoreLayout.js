@@ -7,6 +7,8 @@ import Alert from 'react-s-alert'
 import 'react-s-alert/dist/s-alert-default.css'
 import 'react-s-alert/dist/s-alert-css-effects/scale.css'
 
+import 'react-select/dist/react-select.css'
+
 import LoadingBar from 'react-redux-loading-bar'
 
 export const CoreLayout = ({ children }) => (

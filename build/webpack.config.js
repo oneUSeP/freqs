@@ -51,7 +51,7 @@ webpackConfig.plugins = [
   new HtmlWebpackPlugin({
     template: paths.client('index.html'),
     hash: false,
-    favicon: paths.client('static/usep-logo.png'),
+    favicon: paths.client('static/ic-logo.png'),
     filename: 'index.html',
     inject: 'body',
     minify: {

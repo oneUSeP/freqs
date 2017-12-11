@@ -8,6 +8,10 @@ export default function validateInput (data) {
     errors.name = 'Name is required'
   }
 
+  if (Validator.isNull(data.college)) {
+    errors.college = 'College is required'
+  }
+
   return {
     errors,
     isValid: isEmpty(errors)

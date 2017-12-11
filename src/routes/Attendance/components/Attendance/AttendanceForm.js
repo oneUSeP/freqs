@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import TextFieldGroup from 'components/common/TextFieldGroup'
 import validateInput from 'utils/validators/attendance'
+import {FormGroup, InputGroup, FormControl, DropdownButton, MenuItem} from 'react-bootstrap'
+import classnames from 'classnames'
 
 class AttendanceForm extends Component {
   constructor (props) {
@@ -61,13 +63,34 @@ class AttendanceForm extends Component {
                 placeholder='Full Name'
                 error={this.state.errors.name}
               />
-              <TextFieldGroup
-                onChange={this.onChange}
-                value={this.state.college}
-                field='college'
-                placeholder='College'
-                error={this.state.errors.college}
-              />
+              <FormGroup className={classnames({ 'has-error': this.state.errors.college })}>
+              {this.state.errors.college && <small className='help-block text-right'>{this.state.errors.college}</small>}
+                <InputGroup>
+                  <input
+                    onChange={this.onChange}
+                    value={this.state.college}
+                    type={this.state.type}
+                    name='college'
+                    className={'form-control'}
+                  />
+                  <DropdownButton
+                    componentClass={InputGroup.Button}
+                    id='input-dropdown-addon'
+                    title='SELECT'
+                    onSelect={e => { this.setState({college: e}) }}
+                  >
+                    <MenuItem eventKey={'College of Arts and Sciences'}>College of Arts and Sciences</MenuItem>
+                    <MenuItem eventKey={'College of Education'} >College of Education</MenuItem>
+                    <MenuItem eventKey={'College of Engineering'} >College of Engineering</MenuItem>
+                    <MenuItem eventKey={'College of Governance and Business'} >College of Governance and Business</MenuItem>
+                    <MenuItem eventKey={'College of Technology'}>College of Technology</MenuItem>
+                    <MenuItem eventKey={'School of Applied Economics'} >School of Applied Economics</MenuItem>
+                    <MenuItem eventKey={'Institute of Computing'} >Institute of Computing</MenuItem>
+                    <MenuItem eventKey={'University Evening Program'} >University Evening Program</MenuItem>
+                  </DropdownButton>
+                </InputGroup>
+                <span className='statcard-desc'>College</span>
+              </FormGroup>
               <TextFieldGroup
                 onChange={this.onChange}
                 value={this.state.email}
