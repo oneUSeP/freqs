@@ -37,7 +37,7 @@ export function getAttendances () {
 }
 
 export function createAttendance (data) {
-  let { name } = data
+  let { name, email, college, mobile } = data
   return (dispatch, getState) => {
     console.log(process.env)
     return dispatch({
@@ -49,7 +49,10 @@ export function createAttendance (data) {
           'X-Parse-REST-API-Key': 'masterKey',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({'name': name}),
+        body: JSON.stringify({'name': name,
+          'college': college,
+          'email': email,
+          'mobile': mobile}),
         types: [
           CREATE_ATTENDANCE,
           CREATE_ATTENDANCE_SUCCESS,

@@ -1,25 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import KeyboardedInput from 'react-touch-screen-keyboard'
-import validateInput from 'utils/validators/attendance'
 import Alert from 'react-s-alert'
+import AttendanceForm from './AttendanceForm'
 
 class Attendance extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      name: '',
-      isLoading: false,
-      errors: [],
-      customMapping: [
-        ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
-        ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', '@'],
-        ['z', 'x', 'c', 'v', 'b', 'n', 'm', '.com']
-      ]
-    }
-    this.handleValueChange = this.handleValueChange.bind(this)
-  }
-
   componentWillReceiveProps (nextProps) {
     if (nextProps.createAttendanceError) {
       let status = nextProps.createAttendanceError.status
@@ -34,7 +18,7 @@ class Attendance extends Component {
     if (nextProps.creatingAttendanceSuccess) {
       let attendance = nextProps.attendance
       // Alert.success(`${attendance.get('objectId')} Recorded!`, {
-      Alert.success('Recorded!', {
+      Alert.success('RECORDED', {
         position: 'bottom'
         // effect: 'scale'
       })
@@ -45,37 +29,14 @@ class Attendance extends Component {
     this.setState({ name: val })
   }
 
-  isValid = () => {
-    const { errors, isValid } = validateInput(this.state)
-
-    if (!isValid) {
-      this.setState({ errors, isLoading: false })
-    }
-
-    return isValid
-  }
-
-  onSubmit = (e) => {
-    e.preventDefault()
-    let data = this.state
-    if (this.isValid(data)) {
-      this.setState({ name: '',
-        isLoading: true,
-        errors: {} })
-
-      this.props.createAttendance(data)
-    } else {
-      // this.setState({verify: null})
-    }
-  }
-
   render () {
     return (
-      <div className='container login-wrapper' style={{ marginTop: '10%' }}>
+      <div className='container attendance-wrapper' style={{ marginTop: '5%' }}>
         <div className='hr-divider m-t m-b'>
-          <h3 className='hr-divider-content hr-divider-heading'><img src='http://192.168.1.195:3000/usep-logo.png' width='70' /></h3>
+          <h3 className='hr-divider-content hr-divider-heading'><img src='http://localhost:3000/usep-logo.png' width='70' /><img src='http://localhost:3000/ic-logo.png' width='70' /></h3>
         </div>
-        <div className='flextable'>
+        <AttendanceForm {...this.props} />
+        {/* <div className='flextable'>
           <div className='flextable-item flextable-primary'>
             <KeyboardedInput
               value={this.state.name}
@@ -97,7 +58,7 @@ class Attendance extends Component {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     )
   }
