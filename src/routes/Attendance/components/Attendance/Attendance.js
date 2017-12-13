@@ -31,11 +31,18 @@ class Attendance extends Component {
 
   render () {
     return (
-      <div className='container attendance-wrapper' style={{ marginTop: '5%' }}>
+      <div className='container attendance-wrapper' style={{ marginTop: '2%' }}>
         <div className='hr-divider m-t m-b'>
-          <h3 className='hr-divider-content hr-divider-heading'><img src='http://localhost:3000/usep-logo.png' width='70' /><img src='http://localhost:3000/ic-logo.png' width='70' /></h3>
+          <h3 className='hr-divider-content hr-divider-heading'><img src='http://172.16.210.19:3000/usep-logo.png' width='120' /><img src='http://172.16.210.19:3000/ic-logo.png' width='120' /></h3>
         </div>
-        <AttendanceForm {...this.props} />
+        <div className='row'>
+          <div className='col-sm-6 col-md-6'>
+            <AttendanceForm {...this.props} />
+          </div>
+          <div className='col-sm-6 col-md-6'>
+          </div>
+        </div>
+
         {/* <div className='flextable'>
           <div className='flextable-item flextable-primary'>
             <KeyboardedInput

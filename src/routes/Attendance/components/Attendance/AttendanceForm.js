@@ -54,7 +54,12 @@ class AttendanceForm extends Component {
       <form className='form-access' >
         <div className='row text-center m-t-md'>
           <div className='w-lg m-x-auto'>
-            <strong className='text-muted'>PERSONAL INFORMATION</strong>
+            <div className='dashhead'>
+              <div className='dashhead-titles' style={{float: 'none'}}>
+                <h6 className='dashhead-subtitle'>USeP-IC Open House (39th Foundation Day)</h6>
+                <h3 className='dashhead-title'>PERSONAL INFORMATION</h3>
+              </div>
+            </div>
             <div className='form-group row'>
               <TextFieldGroup
                 onChange={this.onChange}
